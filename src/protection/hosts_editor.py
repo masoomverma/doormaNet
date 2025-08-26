@@ -7,7 +7,7 @@ def get_blocked_domains():
     """Reads the hosts file and returns a list of domains blocked by this tool."""
     blocked = []
     try:
-        with open(HOSTS_FILE_PATH, 'r')     as f:
+        with open(HOSTS_FILE_PATH, 'r') as f:
             for line in f.readlines():
                 if f"# Blocked by DoormaNet" in line:
                     parts = line.split()

@@ -1,7 +1,7 @@
 # src/gui/worker.py
 
 from PyQt5.QtCore import QObject, pyqtSignal
-from main import run_full_scan
+from core.scanner_engine import run_full_scan
 from core import config
 
 class ScannerWorker(QObject):

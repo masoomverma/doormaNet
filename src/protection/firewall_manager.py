@@ -1,6 +1,5 @@
 import ctypes
 import subprocess
-import sys
 
 def is_admin():
     """Check if the script is running with administrator privileges."""
@@ -18,13 +17,9 @@ def block_ip(ip_address):
     # Your final .exe will need to be run "As Administrator" for this to work.
     
     rule_name = f"DoormaNet-Block-{ip_address}"
-    command = [
-        "netsh", "advfirewall", "firewall", "add", "rule",
-        f'name={rule_name}',
-        "dir=in",
-        "action=block",
-        f'remoteip={ip_address}'
-    ]
+    command = (
+        f'netsh advfirewall firewall add rule name="{rule_name}" dir=in action=block remoteip={ip_address}'
+    )
     
     try:
         # We use check_output to run the command and capture its output.

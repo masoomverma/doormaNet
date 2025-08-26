@@ -16,9 +16,10 @@ def grab_banner(target_ip, port):
         sock = socket.socket()
         sock.settimeout(config.BANNER_TIMEOUT)
         sock.connect((target_ip, port))
-        sock.send(b'GET / HTTP/1.\r\n\r\n')
+        # Try a simple HTTP request first; many services reply with a banner or error
+        sock.sendall(b"GET / HTTP/1.0\r\nHost: %b\r\n\r\n" % target_ip.encode())
         banner = sock.recv(1024)
-        return banner.decode('utf-8', errors='ignore').strip()
+        return banner.decode('utf-8', errors='ignore').strip() or None
     
     except Exception as e:
         return None
