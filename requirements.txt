@@ -1,0 +1,11 @@
+# Python default module:
+# socket
+# threading
+# subprocess
+# ipaddress 
+
+# Required Packages
+PyQt5
+scapy
+PyInstaller
+psutil
