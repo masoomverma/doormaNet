@@ -23,16 +23,22 @@ class ScannerWorker(QObject):
         self.status_update.emit(f"Discovering hosts on {self.network_range}...")
         results = run_full_scan(self.network_range)
         
-        self.status_update.emit("Scan finished. Populating results...")
-        for ip, ports in results.items():
-            for port, banner in ports.items():
-                # Emit the standard result for the table
-                self.result_found.emit(ip, port, banner)
-                
-                # Check if the found port is in our critical list from the config file
-                if port in config.CRITICAL_PORTS:
-                    reason = config.CRITICAL_PORTS[port]
-                    # If it is, emit the special signal for the alert pop-up
-                    self.critical_finding.emit(ip, port, reason)
+        if not results:
+            self.status_update.emit("No active hosts found or scan completed with no open ports")
+        else:
+            self.status_update.emit("Processing scan results...")
+            total_ports = sum(len(ports) for ports in results.values())
+            self.status_update.emit(f"Found {total_ports} open port{'s' if total_ports != 1 else ''} on {len(results)} host{'s' if len(results) != 1 else ''}")
+            
+            for ip, ports in results.items():
+                for port, banner in ports.items():
+                    # Emit the standard result for the table
+                    self.result_found.emit(ip, port, banner)
+                    
+                    # Check if the found port is in our critical list from the config file
+                    if port in config.CRITICAL_PORTS:
+                        reason = config.CRITICAL_PORTS[port]
+                        # If it is, emit the special signal for the alert pop-up
+                        self.critical_finding.emit(ip, port, reason)
 
         self.scan_finished.emit()

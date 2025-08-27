@@ -1,35 +1,94 @@
 DoormaNet
 =========
 
-A simple network scanner with a PyQt5 GUI. It discovers devices via ARP, scans TCP ports, attempts banner grabbing, and includes basic Windows protections (block IP via firewall, block domains via hosts file).
+A professional network security and monitoring application with an elegant PyQt5 GUI. Features comprehensive network discovery, port scanning, banner grabbing, website blocking with timestamp tracking, and Windows firewall integration for complete network protection.
 
-Requirements
-- Python 3.9+ (Windows recommended)
-- Administrator privileges for firewall and hosts edits
+## Features
 
-Install
-1) Create/activate a virtual environment
-2) Install dependencies
+- **Network Scanner**: ARP-based device discovery with TCP/UDP port scanning
+- **Website Blocker**: Domain blocking via hosts file with datetime tracking
+- **System Notifications**: Native Windows notifications with theme-aware colors
+- **Firewall Integration**: IP blocking through Windows Firewall rules
+- **Professional UI**: Modern interface with Segoe UI fonts and dark/light theme support
+- **System Information**: Real-time display of network and system details
 
-Run (development)
-Use Python directly:
-- python -m pip install -r requirements.txt
-- python -m pip install -e .
-- python -m main
+## Requirements
 
-Or use the console entry point after editable install:
-- doormanet
+- Python 3.9+ (Windows 10/11 recommended)
+- Administrator privileges for firewall and hosts file modifications
+- PyQt5 for the graphical interface
+- Scapy for network operations
 
-Notes
-- ARP discovery and low-level networking may require running in an elevated shell.
-- Firewall IP blocking and hosts edits require Run as administrator.
-- On first run, the target network is auto-detected; you can override in the UI.
+## Quick Start
 
-Build (optional)
-If you want a single-file exe using PyInstaller, run from an elevated terminal:
-- pyinstaller --noconfirm --windowed --name DoormaNet --add-data "assets;assets" src/main.py
+### Option 1: Use Pre-built Executable
+Download and run `doormaNet.exe` (requires administrator privileges for full functionality)
 
-Troubleshooting
-- If scapy ARP returns nothing, try disabling your VPN, or run as admin.
-- If firewall rule creation fails, ensure the shell is elevated.
-- If UI doesn’t start, verify PyQt5 and that you’re using the right Python.
+### Option 2: Development Setup
+1. Create and activate a virtual environment:
+   ```powershell
+   python -m venv .lib
+   .lib\Scripts\Activate.ps1
+   ```
+
+2. Install dependencies:
+   ```powershell
+   python -m pip install -r requirements.txt
+   python -m pip install -e .
+   ```
+
+3. Run the application:
+   ```powershell
+   python src/main.py
+   ```
+   Or use the console entry point:
+   ```powershell
+   doormanet
+   ```
+
+## Building Executable
+
+To create a standalone executable using PyInstaller:
+
+```powershell
+# Ensure you're in an elevated PowerShell and have activated the virtual environment
+pyinstaller --clean doormanet.spec
+```
+
+The executable will be created in the `dist` folder (~72MB).
+
+## Usage Notes
+
+- **Administrator Rights**: Required for firewall rules and hosts file modifications
+- **Network Discovery**: ARP scanning may require elevated privileges or VPN disconnection
+- **Website Blocking**: Domains are blocked via hosts file with automatic timestamp logging
+- **Notifications**: Uses native Windows system tray notifications
+- **Theme Support**: Automatically adapts to Windows light/dark theme settings
+
+## Project Structure
+
+```
+doormaNet/
+├── src/
+│   ├── main.py              # Application entry point
+│   ├── core/                # Core functionality (config, logging, scanning)
+│   ├── gui/                 # PyQt5 interface components
+│   ├── scanner/             # Network scanning modules
+│   └── protection/          # Firewall and hosts file management
+├── assets/                  # Icons and images
+├── logs/                    # Application logs
+├── doormanet.spec          # PyInstaller configuration
+└── requirements.txt        # Python dependencies
+```
+
+## Troubleshooting
+
+- **No ARP Results**: Disable VPN or run as administrator
+- **Firewall Errors**: Ensure PowerShell is running as administrator
+- **UI Issues**: Verify PyQt5 installation and Python version compatibility
+- **Notifications**: If system notifications don't appear, check Windows notification settings
+- **Build Issues**: Ensure all dependencies are installed and use the provided spec file
+
+## Development
+
+The application uses a modular architecture with separate components for scanning, protection, and GUI management. All UI components follow professional design principles with consistent fonts, spacing, and theme integration.

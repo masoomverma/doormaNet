@@ -7,5 +7,6 @@
 # Required Packages
 PyQt5
 scapy
-PyInstaller
 psutil
+# For the .exe Application
+PyInstaller
